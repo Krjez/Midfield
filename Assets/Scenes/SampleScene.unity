@@ -400,9 +400,9 @@ GameObject:
   - component: {fileID: 1406282697}
   - component: {fileID: 1406282696}
   - component: {fileID: 1406282698}
-  m_Layer: 0
-  m_Name: GroundBorders
-  m_TagString: Untagged
+  m_Layer: 6
+  m_Name: Ground Borders
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1536,7 +1536,8 @@ MonoBehaviour:
   jumpLarge: 8
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
+  GroundCheck: {fileID: 1942889437}
   groundCheckRadius: 0.1
 --- !u!1 &1942889436
 GameObject:

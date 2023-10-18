@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour {
     private bool isFacingRight = true;
 
     public LayerMask whatIsGround;
-  //  public Transform GroundCheck;
+    public Transform GroundCheck;
     public float groundCheckRadius = 0.1f;
     private bool onGround = true;
 
@@ -25,8 +25,9 @@ public class PlayerMovement : MonoBehaviour {
         anim = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
     void FixedUpdate() {
+
+        onGround = Physics2D.OverlapCircle(GroundCheck.position, groundCheckRadius, whatIsGround);
 
         if (onGround) {
             float horizontalInput = Input.GetAxisRaw("Horizontal");
@@ -36,20 +37,29 @@ public class PlayerMovement : MonoBehaviour {
             {
                 Flip();
             }
+
+            if ((Input.GetKey(KeyCode.Space)))
+            {
+                SmallJump();
+            }
         }
 
-       // onGround = Physics2D.OverlapCircle(GroundCheck.position, groundCheckRadius, whatIsGround);
+        
+
 
 
 
     }
 
-    private void Flip()
-    {
+    private void Flip() {
         Vector3 currentScale = gameObject.transform.localScale;
         currentScale.x *= -1;
         gameObject.transform.localScale = currentScale;
         isFacingRight = !isFacingRight;
     }
 
+    private void SmallJump() {
+        body.velocity = new Vector2(body.velocity.x, jumpSmall);
+        onGround = false;
+    }
 }
