@@ -5,10 +5,13 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour {
 
     public int speed = 5;
+    public bool isFacingRight = true;
+
+    public int jumpWait = 0;
     public int jumpSmall = 3;
     public int jumpMedium = 5;
     public int jumpLarge = 8;
-    private bool isFacingRight = true;
+    WaitForSeconds waitSec = new WaitForSeconds(1);
 
     public LayerMask whatIsGround;
     public Transform GroundCheck;
@@ -16,13 +19,11 @@ public class PlayerMovement : MonoBehaviour {
     private bool onGround = true;
 
     private Rigidbody2D body;
-    private Animator anim;
 
 
 
     void Awake() {
         body = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
     }
 
     void FixedUpdate() {
@@ -30,23 +31,43 @@ public class PlayerMovement : MonoBehaviour {
         onGround = Physics2D.OverlapCircle(GroundCheck.position, groundCheckRadius, whatIsGround);
 
         if (onGround) {
-            float horizontalInput = Input.GetAxisRaw("Horizontal");
-            body.velocity = new Vector2(horizontalInput * speed, body.velocity.y);
 
-            if ((horizontalInput > 0 && !isFacingRight) || (horizontalInput < 0 && isFacingRight))
-            {
-                Flip();
+            //Start of wait for the jump
+            if (Input.GetKey(KeyCode.Space)) {
+                body.velocity = new Vector2(0, 0);
+                StartCoroutine(JumpCoroutine());
+                //Researched coroutines here: https://gamedevbeginner.com/coroutines-in-unity-when-and-how-to-use-them/
+                
             }
 
-            if ((Input.GetKey(KeyCode.Space)))
-            {
-                SmallJump();
+            //Jumps certain height depending on time of previously held space key
+            else if (jumpWait > 0) {
+                if(jumpWait <= 1) {
+                    Jump(jumpSmall);
+                }   
+                else if (jumpWait <= 3) {
+                    Jump(jumpMedium);
+                }
+                else {
+                    Jump(jumpLarge);
+                }
             }
+
+            //Not waiting for a jump - able to move
+            else {
+                float horizontalInput = Input.GetAxisRaw("Horizontal");
+                body.velocity = new Vector2(horizontalInput * speed, body.velocity.y);
+
+                if ((horizontalInput > 0 && !isFacingRight) || (horizontalInput < 0 && isFacingRight))
+                {
+                    Flip();
+                }
+            }
+           
+
         }
 
         
-
-
 
 
     }
@@ -58,8 +79,20 @@ public class PlayerMovement : MonoBehaviour {
         isFacingRight = !isFacingRight;
     }
 
-    private void SmallJump() {
-        body.velocity = new Vector2(body.velocity.x, jumpSmall);
+
+    private void Jump(int jumpHeight) {
+        body.velocity = new Vector2(body.velocity.x, jumpHeight);
         onGround = false;
+        jumpWait = 0;
     }
+
+    IEnumerator JumpCoroutine() {
+        while (Input.GetKey(KeyCode.Space)) {
+            jumpWait++;
+            print("coroutine jumpwait: " + jumpWait);
+            yield return waitSec;
+        }
+    }
+
+
 }
