@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 
 public class AudioManager : MonoBehaviour {
 
@@ -35,15 +34,15 @@ public class AudioManager : MonoBehaviour {
 
     
 
-    void PlayJumpSound() {
+    public void PlayJumpSound() {
         soundEffectSource.PlayOneShot(jumpClip);
     }
 
-    void PlayFootstepSound() {
+    public void PlayFootstepSound() {
         soundEffectSource.PlayOneShot(footstepSound);
     }
 
-    void PlayBackgroundMusic() {
+    public void PlayBackgroundMusic() {
         
         if (!backgroundMusicSource.isPlaying) {
             backgroundMusicSource.Play();

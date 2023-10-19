@@ -3,6 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Animator))]
+
 public class PlayerMovement : MonoBehaviour {
 
     public int speed = 5;
@@ -61,6 +65,7 @@ public class PlayerMovement : MonoBehaviour {
     private void MoveHandle() {
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         body.velocity = new Vector2(horizontalInput * speed, body.velocity.y);
+        AudioManager.instance.PlayFootstepSound();
 
         if ((horizontalInput > 0 && !isFacingRight) || (horizontalInput < 0 && isFacingRight))
         {
@@ -99,6 +104,8 @@ public class PlayerMovement : MonoBehaviour {
 
     private void Jump(int jumpHeight) {
         body.velocity = new Vector2(body.velocity.x, jumpHeight);
+        AudioManager.instance.PlayJumpSound();
+
         if (isFacingRight) {
             body.velocity = new Vector2(jumpHeight, body.velocity.y);
         }
