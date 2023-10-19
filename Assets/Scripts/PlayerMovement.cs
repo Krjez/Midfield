@@ -9,9 +9,9 @@ public class PlayerMovement : MonoBehaviour {
     public bool isFacingRight = true;
 
     public int jumpWait = 0;
-    public int jumpSmall = 3;
-    public int jumpMedium = 5;
-    public int jumpLarge = 8;
+    public int jumpSmall = 5;
+    public int jumpMedium = 10;
+    public int jumpLarge = 15;
     public Boolean coroutineRunning = false;
     WaitForSeconds waitTenthSec = new WaitForSeconds(0.1f);
 
@@ -27,6 +27,8 @@ public class PlayerMovement : MonoBehaviour {
     void Awake() {
         body = GetComponent<Rigidbody2D>();
     }
+
+    //Add on collision with ground turning point
 
     void FixedUpdate() {
 
@@ -97,6 +99,12 @@ public class PlayerMovement : MonoBehaviour {
 
     private void Jump(int jumpHeight) {
         body.velocity = new Vector2(body.velocity.x, jumpHeight);
+        if (isFacingRight) {
+            body.velocity = new Vector2(jumpHeight, body.velocity.y);
+        }
+        else {
+            body.velocity = new Vector2(-jumpHeight, body.velocity.y);
+        }
         onGround = false;
         jumpWait = 0;
 
