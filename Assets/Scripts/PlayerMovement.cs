@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +12,8 @@ public class PlayerMovement : MonoBehaviour {
     public int jumpSmall = 3;
     public int jumpMedium = 5;
     public int jumpLarge = 8;
-    WaitForSeconds waitSec = new WaitForSeconds(1);
+    public Boolean coroutineRunning = false;
+    WaitForSeconds waitTenthSec = new WaitForSeconds(0.1f);
 
     public LayerMask whatIsGround;
     public Transform GroundCheck;
@@ -33,19 +35,20 @@ public class PlayerMovement : MonoBehaviour {
         if (onGround) {
 
             //Start of wait for the jump
-            if (Input.GetKey(KeyCode.Space)) {
+            if (Input.GetKey(KeyCode.Space) && !coroutineRunning) {
                 body.velocity = new Vector2(0, 0);
+
                 StartCoroutine(JumpCoroutine());
                 //Researched coroutines here: https://gamedevbeginner.com/coroutines-in-unity-when-and-how-to-use-them/
                 
             }
 
             //Jumps certain height depending on time of previously held space key
-            else if (jumpWait > 0) {
-                if(jumpWait <= 1) {
+            else if (jumpWait > 0 && !coroutineRunning) {
+                if(jumpWait <= 2) {
                     Jump(jumpSmall);
                 }   
-                else if (jumpWait <= 3) {
+                else if (jumpWait <= 10) {
                     Jump(jumpMedium);
                 }
                 else {
@@ -54,7 +57,7 @@ public class PlayerMovement : MonoBehaviour {
             }
 
             //Not waiting for a jump - able to move
-            else {
+            else if (!coroutineRunning){
                 float horizontalInput = Input.GetAxisRaw("Horizontal");
                 body.velocity = new Vector2(horizontalInput * speed, body.velocity.y);
 
@@ -68,8 +71,6 @@ public class PlayerMovement : MonoBehaviour {
         }
 
         
-
-
     }
 
     private void Flip() {
@@ -87,11 +88,14 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     IEnumerator JumpCoroutine() {
+        coroutineRunning = true;
+
         while (Input.GetKey(KeyCode.Space)) {
             jumpWait++;
-            print("coroutine jumpwait: " + jumpWait);
-            yield return waitSec;
+            print(jumpWait);
+            yield return waitTenthSec;
         }
+        coroutineRunning = false;
     }
 
 
