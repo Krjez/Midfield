@@ -30,6 +30,8 @@ public class PlayerMovement : MonoBehaviour {
 
     void FixedUpdate() {
 
+        //TODO add camera movement
+
         onGround = Physics2D.OverlapCircle(GroundCheck.position, groundCheckRadius, whatIsGround);
 
         if (onGround && !coroutineRunning) {
@@ -83,7 +85,7 @@ public class PlayerMovement : MonoBehaviour {
         {
             Jump(jumpSmall);
         }
-        else if (jumpWait <= 10)
+        else if (jumpWait <= 7)
         {
             Jump(jumpMedium);
         }
