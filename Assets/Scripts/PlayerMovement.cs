@@ -32,45 +32,36 @@ public class PlayerMovement : MonoBehaviour {
 
         onGround = Physics2D.OverlapCircle(GroundCheck.position, groundCheckRadius, whatIsGround);
 
-        if (onGround) {
+        if (onGround && !coroutineRunning) {
 
             //Start of wait for the jump
-            if (Input.GetKey(KeyCode.Space) && !coroutineRunning) {
-                body.velocity = new Vector2(0, 0);
-
-                StartCoroutine(JumpCoroutine());
-                //Researched coroutines here: https://gamedevbeginner.com/coroutines-in-unity-when-and-how-to-use-them/
-                
+            if (Input.GetKey(KeyCode.Space)) {
+                JumpWaitHandle();
             }
 
             //Jumps certain height depending on time of previously held space key
-            else if (jumpWait > 0 && !coroutineRunning) {
-                if(jumpWait <= 2) {
-                    Jump(jumpSmall);
-                }   
-                else if (jumpWait <= 10) {
-                    Jump(jumpMedium);
-                }
-                else {
-                    Jump(jumpLarge);
-                }
+            else if (jumpWait > 0) {
+                JumpHandle();
             }
 
             //Not waiting for a jump - able to move
-            else if (!coroutineRunning){
-                float horizontalInput = Input.GetAxisRaw("Horizontal");
-                body.velocity = new Vector2(horizontalInput * speed, body.velocity.y);
-
-                if ((horizontalInput > 0 && !isFacingRight) || (horizontalInput < 0 && isFacingRight))
-                {
-                    Flip();
-                }
+            else {
+                MoveHandle();
             }
            
-
         }
 
-        
+    }
+
+
+    private void MoveHandle() {
+        float horizontalInput = Input.GetAxisRaw("Horizontal");
+        body.velocity = new Vector2(horizontalInput * speed, body.velocity.y);
+
+        if ((horizontalInput > 0 && !isFacingRight) || (horizontalInput < 0 && isFacingRight))
+        {
+            Flip();
+        }
     }
 
     private void Flip() {
@@ -80,11 +71,34 @@ public class PlayerMovement : MonoBehaviour {
         isFacingRight = !isFacingRight;
     }
 
+    private void JumpWaitHandle() {
+        body.velocity = new Vector2(0, 0);
+        StartCoroutine(JumpCoroutine());
+        //Researched coroutines here: https://gamedevbeginner.com/coroutines-in-unity-when-and-how-to-use-them/
+        //https://stackoverflow.com/questions/30056471/how-to-make-the-script-wait-sleep-in-a-simple-way-in-unity
+    }
+
+    private void JumpHandle() {
+        if (jumpWait <= 2)
+        {
+            Jump(jumpSmall);
+        }
+        else if (jumpWait <= 10)
+        {
+            Jump(jumpMedium);
+        }
+        else
+        {
+            Jump(jumpLarge);
+        }
+    }
 
     private void Jump(int jumpHeight) {
         body.velocity = new Vector2(body.velocity.x, jumpHeight);
         onGround = false;
         jumpWait = 0;
+
+        //TODO Add horizontal transform dependent on direction facing
     }
 
     IEnumerator JumpCoroutine() {
