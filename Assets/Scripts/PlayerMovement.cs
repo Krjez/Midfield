@@ -13,16 +13,16 @@ public class PlayerMovement : MonoBehaviour {
     public bool isFacingRight = true;
 
     public int jumpWait = 0;
-    public int jumpSmall = 5;
-    public int jumpMedium = 10;
-    public int jumpLarge = 15;
+    public int jumpSmall = 6;
+    public int jumpMedium = 9;
+    public int jumpLarge = 13;
     public Boolean coroutineRunning = false;
     WaitForSeconds waitTenthSec = new WaitForSeconds(0.1f);
 
     private Rigidbody2D body;
     public LayerMask whatIsGround;
     public Transform GroundCheck;
-    public float groundCheckRadius = 0.1f;
+    public float groundCheckRadius = 0.05f;
     private bool onGround = true;
     public PhysicsMaterial2D playerBounce, playerGround;
 
@@ -38,10 +38,8 @@ public class PlayerMovement : MonoBehaviour {
 
         //TODO add camera movement
 
-        onGround = Physics2D.OverlapCircle(GroundCheck.position, groundCheckRadius, whatIsGround);
+        onGroundMaterial();
 
-        //Changes material of the player to be able to bounce off walls when not on the ground (in-jump)
-        MaterialChange();
 
         if (onGround && !coroutineRunning) {
 
@@ -64,6 +62,13 @@ public class PlayerMovement : MonoBehaviour {
 
     }
 
+
+    public void onGroundMaterial() {
+        onGround = Physics2D.OverlapCircle(GroundCheck.position, groundCheckRadius, whatIsGround);
+
+        //Changes material of the player to be able to bounce off walls when not on the ground (in-jump)
+        MaterialChange();
+    }
 
     private void MaterialChange() { 
 
