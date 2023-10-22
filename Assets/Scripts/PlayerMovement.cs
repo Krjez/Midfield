@@ -19,12 +19,12 @@ public class PlayerMovement : MonoBehaviour {
     public Boolean coroutineRunning = false;
     WaitForSeconds waitTenthSec = new WaitForSeconds(0.1f);
 
+    private Rigidbody2D body;
     public LayerMask whatIsGround;
     public Transform GroundCheck;
     public float groundCheckRadius = 0.1f;
     private bool onGround = true;
-
-    private Rigidbody2D body;
+    public PhysicsMaterial2D playerBounce, playerGround;
 
 
 
@@ -39,6 +39,9 @@ public class PlayerMovement : MonoBehaviour {
         //TODO add camera movement
 
         onGround = Physics2D.OverlapCircle(GroundCheck.position, groundCheckRadius, whatIsGround);
+
+        //Changes material of the player to be able to bounce off walls when not on the ground (in-jump)
+        MaterialChange();
 
         if (onGround && !coroutineRunning) {
 
@@ -61,6 +64,16 @@ public class PlayerMovement : MonoBehaviour {
 
     }
 
+
+    private void MaterialChange() { 
+
+        if (onGround) {
+            body.sharedMaterial = playerGround;
+        }
+        else { 
+            body.sharedMaterial = playerBounce;
+        }
+    }
 
     private void MoveHandle() {
         float horizontalInput = Input.GetAxisRaw("Horizontal");
