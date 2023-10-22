@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour {
     private Rigidbody2D body;
     public LayerMask whatIsGround;
     public Transform GroundCheck;
-    public float groundCheckRadius = 0.05f;
+    public float groundCheckRadius = 0.03f;
     private bool onGround = true;
     public PhysicsMaterial2D playerBounce, playerGround;
 
@@ -65,7 +65,12 @@ public class PlayerMovement : MonoBehaviour {
 
     public void OnCollisionEnter2D(Collision2D collision) {
 
-        if (!onGround) {
+        onGround = Physics2D.OverlapCircle(GroundCheck.position, groundCheckRadius, whatIsGround);
+
+        if (onGround) {
+            body.velocity = new Vector2(0, 0);
+        }
+        else {
             Flip();
         }
     }
