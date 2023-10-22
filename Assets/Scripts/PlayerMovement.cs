@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -60,6 +61,13 @@ public class PlayerMovement : MonoBehaviour {
            
         }
 
+    }
+
+    public void OnCollisionEnter2D(Collision2D collision) {
+
+        if (!onGround) {
+            Flip();
+        }
     }
 
 
