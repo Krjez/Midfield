@@ -14,16 +14,16 @@ public class PlayerMovement : MonoBehaviour {
     public bool isFacingRight = true;
 
     public int jumpWait = 0;
-    public int jumpSmall = 6;
+    public int jumpSmall = 7;
     public int jumpMedium = 9;
-    public int jumpLarge = 13;
+    public int jumpLarge = 12;
     public Boolean coroutineRunning = false;
     WaitForSeconds waitTenthSec = new WaitForSeconds(0.1f);
 
     private Rigidbody2D body;
     public LayerMask whatIsGround;
     public Transform GroundCheck;
-    public float groundCheckRadius = 0.03f;
+    public float groundCheckRadius = 0.1f;
     private bool onGround = true;
     public PhysicsMaterial2D playerBounce, playerGround;
 
