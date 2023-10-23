@@ -23,8 +23,10 @@ public class PlayerMovement : MonoBehaviour {
     private Rigidbody2D body;
     public LayerMask whatIsGround;
     public Transform GroundCheck;
-    public float groundCheckRadius = 0.1f;
+    public Transform GroundCheckOpposite;
+    public Transform GroundCheckBefore;
     private bool onGround = true;
+    private bool beforeGround = false;
     public PhysicsMaterial2D playerBounce, playerGround;
 
 
@@ -35,11 +37,14 @@ public class PlayerMovement : MonoBehaviour {
 
     //Add on collision with ground turning point
 
+    public void Update() {
+        BeforeGroundCheck();
+    }
+
     void FixedUpdate() {
 
-        //TODO add camera movement
-
-        onGroundMaterial();
+        
+        OnGroundCheck();
 
 
         if (onGround && !coroutineRunning) {
@@ -65,8 +70,7 @@ public class PlayerMovement : MonoBehaviour {
 
     public void OnCollisionEnter2D(Collision2D collision) {
 
-        onGround = Physics2D.OverlapCircle(GroundCheck.position, groundCheckRadius, whatIsGround);
-
+        OnGroundCheck();
         if (onGround) {
             body.velocity = new Vector2(0, 0);
         }
@@ -75,28 +79,30 @@ public class PlayerMovement : MonoBehaviour {
         }
     }
 
+    public void OnGroundCheck()
+    {
 
-    public void onGroundMaterial() {
-        onGround = Physics2D.OverlapCircle(GroundCheck.position, groundCheckRadius, whatIsGround);
+        onGround = Physics2D.OverlapArea(GroundCheck.position, GroundCheckOpposite.position, whatIsGround);
 
-        //Changes material of the player to be able to bounce off walls when not on the ground (in-jump)
-        MaterialChange();
     }
 
-    private void MaterialChange() { 
+    public void BeforeGroundCheck()
+    {
 
-        if (onGround) {
+        beforeGround = Physics2D.OverlapArea(GroundCheck.position, GroundCheckBefore.position, whatIsGround);
+
+        if (beforeGround)
+        {
             body.sharedMaterial = playerGround;
         }
-        else { 
-            body.sharedMaterial = playerBounce;
-        }
+
     }
 
     private void MoveHandle() {
+
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         body.velocity = new Vector2(horizontalInput * speed, body.velocity.y);
-        AudioManager.instance.PlayFootstepSound();
+        //AudioManager.instance.PlayFootstepSound();
 
         if ((horizontalInput > 0 && !isFacingRight) || (horizontalInput < 0 && isFacingRight))
         {
@@ -135,7 +141,7 @@ public class PlayerMovement : MonoBehaviour {
 
     private void Jump(int jumpHeight) {
         body.velocity = new Vector2(body.velocity.x, jumpHeight);
-        AudioManager.instance.PlayJumpSound();
+        //AudioManager.instance.PlayJumpSound();
 
         if (isFacingRight) {
             body.velocity = new Vector2(jumpHeight, body.velocity.y);
@@ -144,6 +150,7 @@ public class PlayerMovement : MonoBehaviour {
             body.velocity = new Vector2(-jumpHeight, body.velocity.y);
         }
         onGround = false;
+        body.sharedMaterial = playerBounce;
         jumpWait = 0;
 
         //TODO Add horizontal transform dependent on direction facing
