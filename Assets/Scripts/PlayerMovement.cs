@@ -24,9 +24,7 @@ public class PlayerMovement : MonoBehaviour {
     public LayerMask whatIsGround;
     public Transform GroundCheck;
     public Transform GroundCheckOpposite;
-    public Transform GroundCheckBefore;
     private bool onGround = true;
-    private bool beforeGround = false;
     public PhysicsMaterial2D playerBounce, playerGround;
 
 
@@ -38,7 +36,7 @@ public class PlayerMovement : MonoBehaviour {
     //Add on collision with ground turning point
 
     public void Update() {
-        BeforeGroundCheck();
+
     }
 
     void FixedUpdate() {
@@ -64,13 +62,14 @@ public class PlayerMovement : MonoBehaviour {
                 MoveHandle();
             }
            
-        }
+        }        
 
     }
 
     public void OnCollisionEnter2D(Collision2D collision) {
 
         OnGroundCheck();
+
         if (onGround) {
             body.velocity = new Vector2(0, 0);
         }
@@ -79,21 +78,17 @@ public class PlayerMovement : MonoBehaviour {
         }
     }
 
-    public void OnGroundCheck()
-    {
+    public void OnGroundCheck() {
 
         onGround = Physics2D.OverlapArea(GroundCheck.position, GroundCheckOpposite.position, whatIsGround);
 
-    }
-
-    public void BeforeGroundCheck()
-    {
-
-        beforeGround = Physics2D.OverlapArea(GroundCheck.position, GroundCheckBefore.position, whatIsGround);
-
-        if (beforeGround)
+        if (onGround)
         {
             body.sharedMaterial = playerGround;
+        }
+        else
+        {
+            body.sharedMaterial = playerBounce;
         }
 
     }

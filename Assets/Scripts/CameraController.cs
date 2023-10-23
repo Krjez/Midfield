@@ -13,9 +13,11 @@ public class CameraController : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
+    void Update() {
+
+        //Moves camera up and down with the player. X and Z are not changing
+        //Offset on Y used for camera being slightly higher - player not in the middle of a screen - can predict jumping
+
         Vector3 pos = new Vector3(transform.position.x, Player.position.y + offsetY, transform.position.z);
         transform.position = pos;
     }
