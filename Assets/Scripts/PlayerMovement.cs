@@ -52,6 +52,7 @@ public class PlayerMovement : MonoBehaviour {
     //assigns the player object's rigidbody into variable when the instance is being loaded in
     void Awake() {
         body = GetComponent<Rigidbody2D>();
+        //todo
     }
 
 
