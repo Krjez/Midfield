@@ -8,18 +8,34 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 //[RequireComponent(typeof(Animator))]
 
+
+//Base code from Naoise Collin's classes, Github link:
+//https://github.com/naoisecollins/GD2BPlayerController/blob/main/Assets/Scripts/AdvancedPlayerMovement.cs
+//
+//Heavily modified by me
+//Jakub Polacek
+
+
 public class PlayerMovement : MonoBehaviour {
 
+    //speed for left and right movement on the ground
+    //isFacingRight Determines where the character is looking, affected by Flip()
     public int speed = 5;
     public bool isFacingRight = true;
 
-    public int jumpWait = 0;
+    //Values for different velocity in different jumps
     public int jumpSmall = 7;
     public int jumpMedium = 9;
     public int jumpLarge = 12;
+
+    //coroutineRunning for checking, so that only one JumpCoroutine() can run at the same time
+    //custom waitTenthSec, so the corountine runs exactly 10 times per second
+    //jumpWait counts the number of coroutine runs, determines the type of jump
     public Boolean coroutineRunning = false;
+    public int jumpWait = 0;
     WaitForSeconds waitTenthSec = new WaitForSeconds(0.1f);
 
+    //variables and objects used for physics logic
     private Rigidbody2D body;
     public LayerMask whatIsGround;
     public Transform GroundCheck;
@@ -29,16 +45,18 @@ public class PlayerMovement : MonoBehaviour {
 
 
 
+    //assigns the player object's rigidbody into variable when the instance is being loaded in
     void Awake() {
         body = GetComponent<Rigidbody2D>();
     }
 
-    //Add on collision with ground turning point
 
+    //TODO: re-check all code pieces if something should better belong to Update
     public void Update() {
 
     }
 
+    //FixedUpdate frames used for physics related logic
     void FixedUpdate() {
 
         
@@ -66,11 +84,14 @@ public class PlayerMovement : MonoBehaviour {
 
     }
 
+    //Function for bouncing off the walls and stopping at ground
     public void OnCollisionEnter2D(Collision2D collision) {
 
         OnGroundCheck();
 
         if (onGround) {
+
+            //Helps with stopping the player bouncing off the ground in high speed and extremely small distances, where the material switch could be applied late
             body.velocity = new Vector2(0, 0);
         }
         else {
@@ -148,7 +169,6 @@ public class PlayerMovement : MonoBehaviour {
         body.sharedMaterial = playerBounce;
         jumpWait = 0;
 
-        //TODO Add horizontal transform dependent on direction facing
     }
 
     IEnumerator JumpCoroutine() {
