@@ -43,6 +43,10 @@ public class PlayerMovement : MonoBehaviour {
     private bool onGround = true;
     public PhysicsMaterial2D playerBounce, playerGround;
 
+    //Stores the maximum achieved height for displaying
+    private double maxHeight;
+    private double startHeight;
+
 
 
     //assigns the player object's rigidbody into variable when the instance is being loaded in
