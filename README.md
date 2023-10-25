@@ -1,6 +1,7 @@
 # Midfield
 2D platforming game prototype
 The game idea and concept is heavily inspired by another game named "Jump King"
+
 Official site of that game: https://www.jump-king.com/
 
 The player can move by either jumping or walking, trying to reach the top.
@@ -11,17 +12,24 @@ The game encourages players explore different routes to find more comfortable pa
 
 //TODO add youtube link to video
 
+
+
 Credits and References:
 
-Spritesheets from:
-https://free-game-assets.itch.io/
+Spritesheets from: https://free-game-assets.itch.io/
+
 Exact links:
-Power station: https://free-game-assets.itch.io/power-station-free-tileset-pixel-art
+Hero: https://free-game-assets.itch.io/free-tiny-hero-sprites-pixel-art
+, Power station: https://free-game-assets.itch.io/power-station-free-tileset-pixel-art
+, Exclusion zone: https://craftpix.net/freebies/free-exclusion-zone-tileset-pixel-art
+
 
 Background from:
 https://edermunizz.itch.io/
+
 Exact link: https://edermunizz.itch.io/free-pixel-art-forest
 
 Music from:
 https://www.fiverr.com/mayragandra
+
 Exact link: https://mayragandra.itch.io/freeambientmusic
