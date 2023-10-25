@@ -9,6 +9,11 @@ public class GameSceneManager : MonoBehaviour {
     private string optionsSceneName = "OptionScene";
 
     public bool isPaused = false;
+    public Canvas CanvasObject;
+
+    private void Awake() {
+        CanvasObject.enabled = false;
+    }
 
     void Update() {
 
@@ -27,30 +32,23 @@ public class GameSceneManager : MonoBehaviour {
 
     }
 
-    public void PauseGame()
-    {
+    //Pauses game and displays canvas with message
+    public void PauseGame() {
         isPaused = true;
         Time.timeScale = 0f;
-        //this is for pause menu
-        //if use same thing but 0.1 - "slow motion"
+        CanvasObject.enabled = true;
     }
 
-    public void ResumeGame()
-    {
+    //Resumes game and removes the canvas
+    public void ResumeGame() {
         isPaused = false;
         Time.timeScale = 1f;
-        //turn off pause menu
-    }
-
-    public void LoadMainMenu()
-    {
-        SceneManager.LoadScene("MainMenu");
+        CanvasObject.enabled = false;
     }
 
     //Last loaded scene: 1 - game scene
     private void OnDestroy() {
         GameManager.instance.previousScene = 1;
     }
-
 
 }

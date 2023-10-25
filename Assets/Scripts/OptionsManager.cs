@@ -7,8 +7,6 @@ public class OptionsManager : MonoBehaviour {
 
     [SerializeField]
     private string mainMenuName = "MainMenuScene";
-    [SerializeField]
-    private string gameName = "GameScene";
 
 
     public void OpenMainMenu() {
@@ -17,7 +15,6 @@ public class OptionsManager : MonoBehaviour {
 
     public void BackButton() {
         SceneManager.LoadScene(GameManager.instance.previousScene);
-
     }
 
     public void setVolume(float volume) {
