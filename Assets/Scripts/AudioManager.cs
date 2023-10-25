@@ -22,6 +22,9 @@ public class AudioManager : MonoBehaviour {
     private AudioSource footstepSoundSource;
     private AudioSource backgroundMusicSource;
 
+    public float effectsVolume = 0.7f;
+    public float backgroundVolume = 0.7f;
+
 
     void Awake() {
 
@@ -75,8 +78,6 @@ public class AudioManager : MonoBehaviour {
     }
 
 
-
-
     public void PauseBackgroundMusic() {
         backgroundMusicSource.Pause();
     }
@@ -87,6 +88,12 @@ public class AudioManager : MonoBehaviour {
 
     public void SetBackgroundMusicVolume(float volume) {
         backgroundMusicSource.volume = volume;
+    }
+
+    public void SetEffectsVolume(float volume) {
+        footstepSoundSource.volume = volume;
+        jumpSoundSource.volume = volume;
+        landingSoundSource.volume = volume;
     }
 
 }
