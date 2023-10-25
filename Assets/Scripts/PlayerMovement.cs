@@ -96,7 +96,7 @@ public class PlayerMovement : MonoBehaviour {
 
         if (onGround) {
 
-            //Helps with stopping the player bouncing off the ground in high speed and extremely small distances, where the material switch could be applied late
+            //Helps with stopping the player bouncing off the ground in high speed, where the material switch could be applied late
             body.velocity = new Vector2(0, 0);
             AudioManager.instance.PlayLandingSound();
         }
@@ -186,7 +186,6 @@ public class PlayerMovement : MonoBehaviour {
 
         while (Input.GetKey(KeyCode.Space)) {
             jumpWait++;
-            print(jumpWait);
             yield return waitTenthSec;
         }
         coroutineRunning = false;
