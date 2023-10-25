@@ -10,10 +10,8 @@ public class MainMenuManager : MonoBehaviour {
     [SerializeField]
     private string optionSceneName = "OptionScene";
 
-    // Start is called before the first frame update
     public void StartGame() {
         SceneManager.LoadScene(gameSceneName);
-        
     }
 
     public void OpenOptions() {
@@ -22,5 +20,10 @@ public class MainMenuManager : MonoBehaviour {
 
     public void QuitGame() {
         Application.Quit();
+    }
+
+    //Last loaded scene: 0 - main menu
+    private void OnDestroy() {
+        GameManager.instance.previousScene = 0;
     }
 }

@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 //Base code from Naoise Collin's classes, Github link:
 //https://github.com/naoisecollins/GD2BPlayerController/blob/main/Assets/Scripts/AudioManager.cs
 //
@@ -36,7 +35,7 @@ public class AudioManager : MonoBehaviour {
        }
 
         jumpSoundSource = gameObject.AddComponent<AudioSource>();
-        landingSoundSource = gameObject.GetComponent<AudioSource>();
+        landingSoundSource = gameObject.AddComponent<AudioSource>();
         footstepSoundSource = gameObject.AddComponent<AudioSource>();
         backgroundMusicSource = gameObject.AddComponent<AudioSource>();
 
@@ -50,7 +49,7 @@ public class AudioManager : MonoBehaviour {
         backgroundMusicSource.Play();
     }
 
-    
+
 
     public void PlayJumpSound() {
         jumpSoundSource.PlayOneShot(jumpClip);
