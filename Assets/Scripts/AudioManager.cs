@@ -14,12 +14,14 @@ public class AudioManager : MonoBehaviour {
 
     public static AudioManager instance;
     public AudioClip jumpClip;
+    public AudioClip landingClip;
     public AudioClip footstepSound;
     public AudioClip backgroundMusic;
 
-    private AudioSource soundEffectSource;
-    private AudioSource backgroundMusicSource;
+    private AudioSource jumpSoundSource;
+    private AudioSource landingSoundSource;
     private AudioSource footstepSoundSource;
+    private AudioSource backgroundMusicSource;
 
 
     void Awake() {
@@ -33,23 +35,29 @@ public class AudioManager : MonoBehaviour {
             return;
        }
 
-        soundEffectSource = gameObject.AddComponent<AudioSource>();
-        backgroundMusicSource = gameObject.AddComponent<AudioSource>();
+        jumpSoundSource = gameObject.AddComponent<AudioSource>();
+        landingSoundSource = gameObject.GetComponent<AudioSource>();
         footstepSoundSource = gameObject.AddComponent<AudioSource>();
+        backgroundMusicSource = gameObject.AddComponent<AudioSource>();
 
+        jumpSoundSource.clip = jumpClip;
+        landingSoundSource.clip = landingClip;
+
+        footstepSoundSource.clip = footstepSound;
 
         backgroundMusicSource.clip = backgroundMusic;
         backgroundMusicSource.loop = true;
         backgroundMusicSource.Play();
-
-        footstepSoundSource.clip = footstepSound;
-
     }
 
     
 
     public void PlayJumpSound() {
-        soundEffectSource.PlayOneShot(jumpClip);
+        jumpSoundSource.PlayOneShot(jumpClip);
+    }
+
+    public void PlayLandingSound() {
+        landingSoundSource.PlayOneShot(landingClip);
     }
 
     public void PlayFootstepSound() {
@@ -58,7 +66,6 @@ public class AudioManager : MonoBehaviour {
         {
             footstepSoundSource.PlayOneShot(footstepSound);
         }
-        
     }
 
     public void PlayBackgroundMusic() {
@@ -67,6 +74,9 @@ public class AudioManager : MonoBehaviour {
             backgroundMusicSource.Play();
         }
     }
+
+
+
 
     public void PauseBackgroundMusic() {
         backgroundMusicSource.Pause();

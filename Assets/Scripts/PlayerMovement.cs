@@ -98,6 +98,7 @@ public class PlayerMovement : MonoBehaviour {
 
             //Helps with stopping the player bouncing off the ground in high speed and extremely small distances, where the material switch could be applied late
             body.velocity = new Vector2(0, 0);
+            AudioManager.instance.PlayLandingSound();
         }
         else {
             Flip();
@@ -164,8 +165,9 @@ public class PlayerMovement : MonoBehaviour {
     }
 
     private void Jump(int jumpHeight) {
+
         body.velocity = new Vector2(body.velocity.x, jumpHeight);
-        //AudioManager.instance.PlayJumpSound();
+        AudioManager.instance.PlayJumpSound();
 
         if (isFacingRight) {
             body.velocity = new Vector2(jumpHeight, body.velocity.y);
