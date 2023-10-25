@@ -2,6 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//Base code from Naoise Collin's classes, Github link:
+//https://github.com/naoisecollins/GD2BPlayerController/blob/main/Assets/Scripts/AudioManager.cs
+//
+//Slightly modified by me
+//Jakub Polacek
+
+
 public class AudioManager : MonoBehaviour {
 
     public static AudioManager instance;
@@ -11,6 +19,7 @@ public class AudioManager : MonoBehaviour {
 
     private AudioSource soundEffectSource;
     private AudioSource backgroundMusicSource;
+    private AudioSource footstepSoundSource;
 
 
     void Awake() {
@@ -26,10 +35,15 @@ public class AudioManager : MonoBehaviour {
 
         soundEffectSource = gameObject.AddComponent<AudioSource>();
         backgroundMusicSource = gameObject.AddComponent<AudioSource>();
+        footstepSoundSource = gameObject.AddComponent<AudioSource>();
+
 
         backgroundMusicSource.clip = backgroundMusic;
         backgroundMusicSource.loop = true;
         backgroundMusicSource.Play();
+
+        footstepSoundSource.clip = footstepSound;
+
     }
 
     
@@ -39,7 +53,12 @@ public class AudioManager : MonoBehaviour {
     }
 
     public void PlayFootstepSound() {
-        soundEffectSource.PlayOneShot(footstepSound);
+
+        if (!footstepSoundSource.isPlaying)
+        {
+            footstepSoundSource.PlayOneShot(footstepSound);
+        }
+        
     }
 
     public void PlayBackgroundMusic() {

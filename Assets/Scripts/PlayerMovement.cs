@@ -123,7 +123,10 @@ public class PlayerMovement : MonoBehaviour {
 
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         body.velocity = new Vector2(horizontalInput * speed, body.velocity.y);
-        //AudioManager.instance.PlayFootstepSound();
+
+        if(horizontalInput != 0) {
+            AudioManager.instance.PlayFootstepSound();
+        }
 
         if ((horizontalInput > 0 && !isFacingRight) || (horizontalInput < 0 && isFacingRight))
         {
