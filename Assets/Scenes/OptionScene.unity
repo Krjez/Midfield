@@ -375,7 +375,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 731748789}
         m_TargetAssemblyTypeName: OptionsManager, Assembly-CSharp
-        m_MethodName: OpenMainMenu
+        m_MethodName: BackButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

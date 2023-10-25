@@ -8,14 +8,14 @@ public class MainMenuManager : MonoBehaviour {
     [SerializeField]
     private string gameSceneName = "GameScene";
     [SerializeField]
-    private string optionSceneName = "OptionScene";
+    private string optionsSceneName = "OptionScene";
 
     public void StartGame() {
         SceneManager.LoadScene(gameSceneName);
     }
 
     public void OpenOptions() {
-        SceneManager.LoadScene(optionSceneName);
+        SceneManager.LoadScene(optionsSceneName);
     }
 
     public void QuitGame() {

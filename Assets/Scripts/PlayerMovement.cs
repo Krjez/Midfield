@@ -49,10 +49,15 @@ public class PlayerMovement : MonoBehaviour {
 
 
 
-    //assigns the player object's rigidbody into variable when the instance is being loaded in
+    //assigns the player object's rigidbody into variable when it is being loaded in and moves them to the last
     void Awake() {
         body = GetComponent<Rigidbody2D>();
-        //todo
+        body.transform.position = new Vector2(GameManager.instance.playerX, GameManager.instance.playerY);
+        if(GameManager.instance.isFlipped) {
+            Flip();
+        }
+
+        //todo restart?
     }
 
 
@@ -189,6 +194,13 @@ public class PlayerMovement : MonoBehaviour {
             yield return waitTenthSec;
         }
         coroutineRunning = false;
+    }
+
+    //Saves last player position before changing screens
+    private void OnDestroy() {
+        GameManager.instance.playerX = body.position.x;
+        GameManager.instance.playerY = body.position.y;
+        GameManager.instance.isFlipped = !isFacingRight;
     }
 
 
