@@ -43,11 +43,6 @@ public class PlayerMovement : MonoBehaviour {
     private bool onGround = true;
     public PhysicsMaterial2D playerBounce, playerGround;
 
-    //Stores the maximum achieved height for displaying
-    private double maxHeight;
-    private double startHeight;
-
-
 
     //assigns the player object's rigidbody into variable when it is being loaded in and moves them to the last
     void Awake() {
@@ -56,22 +51,11 @@ public class PlayerMovement : MonoBehaviour {
         if(GameManager.instance.isFlipped) {
             Flip();
         }
-
-        //todo restart?
-    }
-
-
-    //TODO: re-check all code pieces if something should better belong to Update
-    public void Update() {
-
     }
 
     //FixedUpdate frames used for physics related logic
     void FixedUpdate() {
-
-        
         OnGroundCheck();
-
 
         if (onGround && !coroutineRunning) {
 
@@ -79,19 +63,15 @@ public class PlayerMovement : MonoBehaviour {
             if (Input.GetKey(KeyCode.Space)) {
                 JumpWaitHandle();
             }
-
             //Jumps certain height depending on time of previously held space key
             else if (jumpWait > 0) {
                 JumpHandle();
             }
-
             //Not waiting for a jump - able to move
             else {
                 MoveHandle();
-            }
-           
-        }        
-
+            }      
+        }       
     }
 
     //Function for bouncing off the walls and stopping at ground
@@ -110,36 +90,37 @@ public class PlayerMovement : MonoBehaviour {
         }
     }
 
+    //Checks if the player is on the ground/very close to ground with rectangle area drawn by 2 points
     public void OnGroundCheck() {
-
         onGround = Physics2D.OverlapArea(GroundCheck.position, GroundCheckOpposite.position, whatIsGround);
 
-        if (onGround)
-        {
+        //Switches player's material depending on proximity to ground
+        if (onGround) {
             body.sharedMaterial = playerGround;
         }
-        else
-        {
+        else {
             body.sharedMaterial = playerBounce;
         }
 
     }
 
+    //Handles horizontal movement, flips
     private void MoveHandle() {
 
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         body.velocity = new Vector2(horizontalInput * speed, body.velocity.y);
 
+        //Waits with sound until player is moving
         if(horizontalInput != 0) {
             AudioManager.instance.PlayFootstepSound();
         }
 
-        if ((horizontalInput > 0 && !isFacingRight) || (horizontalInput < 0 && isFacingRight))
-        {
+        if ((horizontalInput > 0 && !isFacingRight) || (horizontalInput < 0 && isFacingRight)) {
             Flip();
         }
     }
 
+    //Flip character to look on the other side
     private void Flip() {
         Vector3 currentScale = gameObject.transform.localScale;
         currentScale.x *= -1;
@@ -147,6 +128,7 @@ public class PlayerMovement : MonoBehaviour {
         isFacingRight = !isFacingRight;
     }
 
+    //Prevents player from moving left/right when charging jump, starts coroutine to count the time
     private void JumpWaitHandle() {
         body.velocity = new Vector2(0, 0);
         StartCoroutine(JumpCoroutine());
@@ -154,21 +136,32 @@ public class PlayerMovement : MonoBehaviour {
         //https://stackoverflow.com/questions/30056471/how-to-make-the-script-wait-sleep-in-a-simple-way-in-unity
     }
 
-    private void JumpHandle() {
-        if (jumpWait <= 2)
+    //Coroutine with check to run only 1 at a time. Counts tenths of a second
+    IEnumerator JumpCoroutine() {
+        coroutineRunning = true;
+
+        while (Input.GetKey(KeyCode.Space))
         {
+            jumpWait++;
+            yield return waitTenthSec;
+        }
+        coroutineRunning = false;
+    }
+
+    //Decides how high the jump is gonna be
+    private void JumpHandle() {
+        if (jumpWait <= 2) {
             Jump(jumpSmall);
         }
-        else if (jumpWait <= 7)
-        {
+        else if (jumpWait <= 7) {
             Jump(jumpMedium);
         }
-        else
-        {
+        else {
             Jump(jumpLarge);
         }
     }
 
+    //Jumps itself and reset of the support variables
     private void Jump(int jumpHeight) {
 
         body.velocity = new Vector2(body.velocity.x, jumpHeight);
@@ -180,20 +173,11 @@ public class PlayerMovement : MonoBehaviour {
         else {
             body.velocity = new Vector2(-jumpHeight, body.velocity.y);
         }
-        onGround = false;
+        
         body.sharedMaterial = playerBounce;
         jumpWait = 0;
+        onGround = false;
 
-    }
-
-    IEnumerator JumpCoroutine() {
-        coroutineRunning = true;
-
-        while (Input.GetKey(KeyCode.Space)) {
-            jumpWait++;
-            yield return waitTenthSec;
-        }
-        coroutineRunning = false;
     }
 
     //Saves last player position before changing screens
@@ -202,6 +186,4 @@ public class PlayerMovement : MonoBehaviour {
         GameManager.instance.playerY = body.position.y;
         GameManager.instance.isFlipped = !isFacingRight;
     }
-
-
 }

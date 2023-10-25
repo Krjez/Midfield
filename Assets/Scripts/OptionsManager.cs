@@ -14,6 +14,7 @@ public class OptionsManager : MonoBehaviour {
     [SerializeField]
     private Slider sliderBackground;
 
+    //Gets the current volume levels from audio manager so that the sliders display correctly at start
     private void Awake() {
         sliderEffects.value = AudioManager.instance.effectsVolume;
         sliderBackground.value = AudioManager.instance.backgroundVolume;
@@ -24,10 +25,12 @@ public class OptionsManager : MonoBehaviour {
         SceneManager.LoadScene(mainMenuName);
     }
 
+    //Uses the previousScene to go back by one - anticipated more screens in future
     public void BackButton() {
         SceneManager.LoadScene(GameManager.instance.previousScene);
     }
 
+    //Methods passed into the sliders
     public void SetEffectsVolume(float volume) {
         AudioManager.instance.SetEffectsVolume(volume);
         AudioManager.instance.effectsVolume = volume;

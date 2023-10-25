@@ -1050,6 +1050,8 @@ MonoBehaviour:
   landingClip: {fileID: 8300000, guid: 488f416f04d16fb4ea45691d2f62e644, type: 3}
   footstepSound: {fileID: 8300000, guid: cffc3c9f896ab814aa56b719e5811c82, type: 3}
   backgroundMusic: {fileID: 8300000, guid: 1fd8522cd5c72e445a97ab38bfcf2199, type: 3}
+  effectsVolume: 0.7
+  backgroundVolume: 0.7
 --- !u!1 &1508809994
 GameObject:
   m_ObjectHideFlags: 0

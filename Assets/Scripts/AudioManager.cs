@@ -28,28 +28,31 @@ public class AudioManager : MonoBehaviour {
 
     void Awake() {
 
-       if(instance == null) {
+        //Prevents being destroyed on new scenes
+        if(instance == null) {
             instance = this;
             DontDestroyOnLoad(gameObject);
-       }
-       else {
+        }
+        else {
             Destroy(gameObject);
             return;
-       }
+        }
 
         jumpSoundSource = gameObject.AddComponent<AudioSource>();
         landingSoundSource = gameObject.AddComponent<AudioSource>();
         footstepSoundSource = gameObject.AddComponent<AudioSource>();
         backgroundMusicSource = gameObject.AddComponent<AudioSource>();
 
+        footstepSoundSource.clip = footstepSound;
         jumpSoundSource.clip = jumpClip;
         landingSoundSource.clip = landingClip;
-
-        footstepSoundSource.clip = footstepSound;
-
         backgroundMusicSource.clip = backgroundMusic;
         backgroundMusicSource.loop = true;
-        backgroundMusicSource.Play();
+
+        SetEffectsVolume(effectsVolume);
+        SetBackgroundMusicVolume(backgroundVolume);
+
+        PlayBackgroundMusic();
     }
 
 
@@ -62,10 +65,10 @@ public class AudioManager : MonoBehaviour {
         landingSoundSource.PlayOneShot(landingClip);
     }
 
+    //Because player movement is continuous, checks if there is already a clip playing to prevent it repeating over itself
     public void PlayFootstepSound() {
 
-        if (!footstepSoundSource.isPlaying)
-        {
+        if (!footstepSoundSource.isPlaying) {
             footstepSoundSource.PlayOneShot(footstepSound);
         }
     }
@@ -75,15 +78,6 @@ public class AudioManager : MonoBehaviour {
         if (!backgroundMusicSource.isPlaying) {
             backgroundMusicSource.Play();
         }
-    }
-
-
-    public void PauseBackgroundMusic() {
-        backgroundMusicSource.Pause();
-    }
-
-    public void StopBackgroundMusic() {
-        backgroundMusicSource.Stop();
     }
 
     public void SetBackgroundMusicVolume(float volume) {
