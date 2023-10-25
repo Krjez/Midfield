@@ -33,3 +33,8 @@ Music from:
 https://www.fiverr.com/mayragandra
 
 Exact link: https://mayragandra.itch.io/freeambientmusic
+
+Sound effects from:
+https://leohpazmusic.wordpress.com/
+
+Exact link: https://leohpaz.itch.io/minifantasy-forgotten-plains-sfx-pack
