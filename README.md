@@ -24,7 +24,7 @@ Hero: https://free-game-assets.itch.io/free-tiny-hero-sprites-pixel-art
 , Exclusion zone: https://craftpix.net/freebies/free-exclusion-zone-tileset-pixel-art
 
 
-Background from:
+Background art from:
 https://edermunizz.itch.io/
 
 Exact link: https://edermunizz.itch.io/free-pixel-art-forest
@@ -34,7 +34,12 @@ https://www.fiverr.com/mayragandra
 
 Exact link: https://mayragandra.itch.io/freeambientmusic
 
-Sound effects from:
+Footstep sounds from:
 https://leohpazmusic.wordpress.com/
 
 Exact link: https://leohpaz.itch.io/minifantasy-forgotten-plains-sfx-pack
+
+Jump from:
+https://soundcloud.com/joelburford
+
+Exact link: https://soundcloud.com/joelburford/sets/jrpg-chiptune-adventure-music-pack
