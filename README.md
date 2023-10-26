@@ -5,8 +5,8 @@
 Official site of that game: https://www.jump-king.com/
 
 The player can move by either jumping or walking, trying to reach the top.
-<br>Jumps can be charged by holding a space key, so player has to tak caution and decide when, where and how much jump force to use.
-<br>The game encourages players explore different routes to find more comfortable paths up.
+<br>Jumps can be charged by holding a space key, so player has to take caution and decide when, where and how much jump force to use.
+<br>The game encourages players to explore different routes to find more comfortable paths up.
 
 ### Game controls
 A/left arrow - left
@@ -17,7 +17,7 @@ A/left arrow - left
 
 ### Links to videos
 Short gameplay video: https://youtu.be/ugIN-lzVWNE
-Explanation of the project: WIP
+<br><b>Explanation of the project:</b> https://youtu.be/0zWEV2mOmfw
 
 ## Credits and References:
 
