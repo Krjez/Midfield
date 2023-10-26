@@ -1,20 +1,25 @@
 # Midfield
 2D platforming game prototype
-The game idea and concept is heavily inspired by another game named "Jump King"
+<br>The game idea and concept is heavily inspired by another game named "Jump King"
 
 Official site of that game: https://www.jump-king.com/
 
 The player can move by either jumping or walking, trying to reach the top.
-Jumps can be charged by holding a space key, so player has to tak caution and decide when, where and how much jump force to use.
-The game encourages players explore different routes to find more comfortable paths up.
+<br>Jumps can be charged by holding a space key, so player has to tak caution and decide when, where and how much jump force to use.
+<br>The game encourages players explore different routes to find more comfortable paths up.
 
+### Game controls
+A/left arrow - left
+<br>D/right arrow - right
+<br>space - jump - has 3 different jump heights
+<br>P - pause
+<br>Escape - options menu
 
+### Links to videos
+Short gameplay video: https://youtu.be/ugIN-lzVWNE
+Explanation of the project: WIP
 
-//TODO add youtube link to video
-
-
-
-Credits and References:
+## Credits and References:
 
 Spritesheets from: https://free-game-assets.itch.io/
 
